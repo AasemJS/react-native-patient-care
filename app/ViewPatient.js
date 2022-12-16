@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView, FlatList, StyleSheet, Text, View, ScrollView, TouchableOpacity, ActivityIndicatorComponent } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useState, useEffect } from "react";
+//import { patientsMockData } from "./MockData.js";
  
 let ViewPatient = null;
 export let id = null;
@@ -18,13 +19,23 @@ export default ViewPatient = ({ navigation }) => {
     const ListEmpty = () => {
         return (
             <View style={{ alignItems: "center" }}>
-            <Text style={styles.item}>Error, patients information missing</Text>
+                <Text style={styles.item}>Error, patients information missing</Text>
             </View>
         );
     };
  
     const [data, setData] = useState([]);
  
+    useEffect(() => {
+            const fetchData = async () => {
+            const result = await fetch("http://192.168.0.159:19000/patients")
+            const jsonResult = await result.json();
+            setData(jsonResult)
+        }
+            
+            fetchData();
+    }, [])
+
     const fetchData = async () => {
         const resp = await fetch("http://192.168.0.159:19000/patients");
         const data = await resp.json();
@@ -120,7 +131,6 @@ const styles = StyleSheet.create({
         width: 188,
         margin: 10,
         textAlign: 'center',
-        backgroundColor: '#abdbe3',
     },
     input: {
         height: 40,

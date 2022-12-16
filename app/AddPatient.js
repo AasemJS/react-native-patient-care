@@ -17,44 +17,40 @@ export default AddPatient = ({ navigation }) => {
     const [doctor, setDoctor] = React.useState('');
 
     const getDataUsingPost = () => {
-    console.log("post method")
 
-    var dataToSend = {
-      "patient_name": patient_name,
-      "address": address,
-      "age": age,
-      "contact_no": contact_no,
-      "department": department,
-      "doctor": doctor
-    };
+        var dataToSend = {
+          "patient_name": patient_name,
+          "address": address,
+          "age": age,
+          "contact_no": contact_no,
+          "department": department,
+          "doctor": doctor
+        };
 
-    var formBody = [];
-    for (var key in dataToSend) {
-      var encodedKey = encodeURIComponent(key);
-      var encodedValue = encodeURIComponent(dataToSend[key]);
-      formBody.push(encodedKey + '=' + encodedValue);
-    }
-    formBody = formBody.join('&');
-
-    fetch('http://192.168.0.159:19000/patients', {
-      method: 'POST', //Request Type
-      body: formBody, //post body
-      headers: {
-
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      },
-    })
-    .then((response) => response.json())
-
-    .then((responseJson) => {
-
-        console.log(responseJson);
-        })
-
-    .catch((error) => {
-        alert(JSON.stringify(error));
-        console.error(error);
-        });
+        var formBody = [];
+        for (var key in dataToSend) {
+          var encodedKey = encodeURIComponent(key);
+          var encodedValue = encodeURIComponent(dataToSend[key]);
+          formBody.push(encodedKey + '=' + encodedValue);
+        }
+        formBody = formBody.join('&');
+            
+        try {
+            
+            let result = fetch('http://192.168.0.159:19000/patients', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(formBody)
+            })
+            .then((response) => response.json());
+            console.log ("Result : " + result)
+        }
+        catch(e) {
+            console.log (e)
+        }
     };
   return (
     <SafeAreaView style={styles.container}>

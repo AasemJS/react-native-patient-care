@@ -17,15 +17,12 @@ export default AddTestRecord = ({ navigation }) => {
   const [heart_rate, setHeart] = React.useState('');
 
   const getDataUsingPost = () => {
-    console.log("post method")
     const current = new Date();
-
-
     const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
     const time = `${current.toLocaleTimeString("en-US", {hour: "2-digit",minute: "2-digit"})}`;
-
       console.log(iscritical)
-    //POST json
+    
+      //POST json
     var dataToSend = {
       "patient_id": id,
       "nurse_name": nurse_name,
@@ -46,7 +43,7 @@ export default AddTestRecord = ({ navigation }) => {
     }
     formBody = formBody.join('&');
     //POST request
-    fetch('http://192.168.0.159:19000/patients/:id/tests', {
+    fetch('http://192.168.0.159:19000/patients/@id/tests', {
       method: 'POST', //Request Type
       body: formBody, //post body
       headers: {
@@ -55,14 +52,11 @@ export default AddTestRecord = ({ navigation }) => {
       },
     })
       .then((response) => response.json())
-      //If response is in json then in success
       .then((responseJson) => {
-        //alert(JSON.stringify(responseJson));
         console.log(responseJson);
       })
-      //If response is not in json then in error
       .catch((error) => {
-        alert(JSON.stringify(error));
+        //alert(JSON.stringify(error));
         console.error(error);
       });
   };
@@ -119,8 +113,6 @@ export default AddTestRecord = ({ navigation }) => {
             value={iscritical}
 
             onValueChange={setCritical} />
-
-          
 
         </View>
 

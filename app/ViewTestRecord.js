@@ -114,7 +114,6 @@ const styles = StyleSheet.create({
         paddingBottom: 9,
         paddingTop: 9,
         textAlign: 'center',
-        backgroundColor: '#abdbe3',
     },
     input: {
         height: 40,
